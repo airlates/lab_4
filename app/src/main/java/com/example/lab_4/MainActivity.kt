@@ -1,8 +1,11 @@
 package com.example.lab_4
 
 
+import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.ActivityOptions
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -21,6 +24,8 @@ private const val KEY_INDEX = "index"
 private const val REQUEST_CODE_CHEAT=0
 
 class MainActivity : AppCompatActivity() {
+
+    @SuppressLint("RestrictedApi")
 
     private lateinit var trueButton: Button
     private lateinit var falseButton: Button
@@ -78,7 +83,15 @@ class MainActivity : AppCompatActivity() {
         {
             val answerIsTrue=quizViewModel.currentQuestionAnswer
             val intent=CheatActivity.newIntent(this@MainActivity,answerIsTrue)
-            startActivityForResult(intent,REQUEST_CODE_CHEAT)
+
+            if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M)
+            {
+                val options = ActivityOptions.makeClipRevealAnimation(cheatButton, 0, 0, cheatButton.width, cheatButton.height)
+                startActivityForResult(intent,REQUEST_CODE_CHEAT,options.toBundle())
+            }else
+            {
+                startActivityForResult(intent,REQUEST_CODE_CHEAT)
+            }
 
         }
         updateQuestion()

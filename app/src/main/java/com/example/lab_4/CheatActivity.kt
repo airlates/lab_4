@@ -3,9 +3,11 @@ package com.example.lab_4
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -18,7 +20,7 @@ class CheatActivity : AppCompatActivity() {
 
     private lateinit var answerTextView:TextView
     private lateinit var showAnswerButton:Button
-
+    private lateinit var versionSDK:TextView
     private var answerIsTrue=false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +30,7 @@ class CheatActivity : AppCompatActivity() {
         answerIsTrue=intent.getBooleanExtra(EXTRA_ANSWER_IS_TRUE,false)
         answerTextView=findViewById(R.id.answer_text_view)
         showAnswerButton=findViewById(R.id.show_answer_button)
+        versionSDK=findViewById(R.id.VersionSDK)
         showAnswerButton.setOnClickListener()
         {
             val answerText=when{
@@ -37,7 +40,7 @@ class CheatActivity : AppCompatActivity() {
             answerTextView.setText(answerText)
             setAnswerShownResult(true)
         }
-
+        versionSDK.setText("API Level "+Build.VERSION.SDK_INT.toString())
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
