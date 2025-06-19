@@ -1,6 +1,7 @@
 package com.example.lab_4
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -22,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var trueButton: Button
     private lateinit var falseButton: Button
     private lateinit var nextButton: Button
+    private lateinit var cheatButton: Button
     private lateinit var questionTextView: TextView
     var id_Quistion=1
     var score=0
@@ -51,6 +53,7 @@ class MainActivity : AppCompatActivity() {
         trueButton=findViewById(R.id.true_button)
         falseButton=findViewById(R.id.false_button)
         nextButton=findViewById(R.id.next_button)
+        cheatButton=findViewById(R.id.cheat_button)
         questionTextView=findViewById(R.id.question_text_view)
 
         trueButton.setOnClickListener()
@@ -75,6 +78,14 @@ class MainActivity : AppCompatActivity() {
             id_Quistion++
             if(id_Quistion==6)
                 nextButton.visibility=View.INVISIBLE
+        }
+
+        cheatButton.setOnClickListener()
+        {
+            val answerIsTrue=quizViewModel.currentQuestionAnswer
+            val intent=CheatActivity.newIntent(this@MainActivity,answerIsTrue)
+            startActivity(intent)
+
         }
         updateQuestion()
     }
